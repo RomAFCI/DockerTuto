@@ -1,0 +1,38 @@
+version: '3'
+
+services:
+    php:
+        container_name: php
+        build:
+            context: ./docker/php/
+            dockerfile: ./Dockerfile
+        restart: always
+        ports:
+            - 8000:80
+        volumes:
+            - ./php/:/var/www/html/
+
+    db:
+        container_name: database
+        image: mysql:8.0.29
+        restart: always
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: bdd
+        ports:
+            - 3306
+        volumes:
+            - db-data:/var/lib/mysql
+
+    phpmyadmin:
+        container_name: phpmyadmin
+        image: phpmyadmin/phpmyadmin
+        restart: always
+        environment:
+            PMA_HOST: db
+            MYSQL_ROOT_PASSWORD: root
+        ports:
+            - 8080:80
+
+volumes:
+    db-data:
