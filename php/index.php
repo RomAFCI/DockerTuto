@@ -18,8 +18,8 @@ try {
 $sqlAll = "SELECT * FROM `vehicule`";
 $stmtAll = $pdo->prepare($sqlAll);
 $stmtAll->execute();
-$resultAll = $stmtAll->fetchAll(PDO::FETCH_ASSOC);
-var_dump('resultAll');
+$resultsAll = $stmtAll->fetchAll(PDO::FETCH_ASSOC);
+var_dump('resultsAll');
 
 ?>
 
@@ -83,7 +83,7 @@ var_dump('resultAll');
     <hr>
 
     <?php
-    foreach ($resultAll as $key => $value) {
+    foreach ($resultsAll as $key => $value) {
         $idASupprimer = $value['idVehicule'];
         echo "<form method='POST'>";
         echo "<input type='hidden' name='idDelete' value='$idASupprimer'";
