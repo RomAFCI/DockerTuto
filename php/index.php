@@ -15,6 +15,12 @@ try {
     echo "Erreur de connexion : " . $e->getMessage();
 }
 
+$sqlAll = "SELECT * FROM `vehicule`";
+$stmtAll = $pdo->prepare($sqlAll);
+$stmtAll->execute();
+$resultAll = $stmtAll->fetchAll(PDO::FETCH_ASSOC);
+var_dump('resultAll');
+
 ?>
 
 <!DOCTYPE html>
@@ -74,6 +80,27 @@ try {
         </select>
         <input type="submit" name="envoiDonneesImmatriculation">
     </form>
+    <hr>
+
+    <?php
+    foreach ($resultAll as $key => $value) {
+        $idASupprimer = $value['idVehicule'];
+        echo "<form method='POST'>";
+        echo "<input type='hidden' name='idDelete' value='$idASupprimer'";
+        foreach ($value as $key => $value2) {
+            echo $key . " : " . $value2 . " - ";
+        }
+        echo '<input type="submit" name="supprimer" value="delete"><br>';
+        echo "</form>";
+    }
+    if (isset($_POST['supprimer'])) {
+        $idToDelete = $_POST['idDelete'];
+        $sqlDelete = "DELETE FROM `vehicule` WHERE idVehicule = 'idToDelete'";
+        $stmtDelete = $pdo->prepare($sqlDelete);
+        $stmtDelete->execute();
+    }
+    ?>
+
 </body>
 
 </html>
