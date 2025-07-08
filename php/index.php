@@ -67,8 +67,8 @@ try {
         </select>
         <select name="selectType">
             <?php
-            foreach ($resultCouleurs as $key => $value) {
-                echo "<option value='" . $value["idCouleur"] . "'>" . $value['nomCouleur'] . "</option>";
+            foreach ($resultTypes as $key => $value) {
+                echo "<option value='" . $value["idType"] . "'>" . $value['nomType'] . "</option>";
             }
             ?>
         </select>
@@ -101,6 +101,11 @@ if (isset($_POST['envoiDonneesType'])) {
 if (isset($_POST['envoiDonneesImmatriculation'])) {
     $color = $_POST['selectCouleur'];
     $immatriculation = $_POST['immatriculation'];
+    $type = $_POST["selectType"];
+    $sql = "INSERT INTO `vehicule`(`immatriculation`, `typeVehicule`, `couleur`) VALUES ('$immatriculation','$type','$color')";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute();
+    echo "C'est ok !";
 }
 
 ?>
