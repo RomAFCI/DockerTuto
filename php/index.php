@@ -37,29 +37,42 @@ try {
         <input type="submit" name="envoiDonneesType" value="Envoyé un type de véhicule">
     </form>
 
-<?php 
+    <?php
 
-$sqlCouleur = "SELECT * FROM `couleur`";
-$stmtCouleur = $pdo->prepare($sqlCouleur);
-$stmtCouleur->execute();
-$resultCouleurs = $stmtCouleur->fetchAll(PDO::FETCH_ASSOC);
-var_dump($resultCouleurs);
+    $sqlCouleur = "SELECT * FROM `couleur`";
+    $stmtCouleur = $pdo->prepare($sqlCouleur);
+    $stmtCouleur->execute();
+    $resultCouleurs = $stmtCouleur->fetchAll(PDO::FETCH_ASSOC);
+    var_dump($resultCouleurs);
+    echo "<br>";
+    $sqlType = "SELECT * FROM `typeVehicule`";
+    $stmtType = $pdo->prepare($sqlType);
+    $stmtType->execute();
+    $resultTypes = $stmtType->fetchAll(PDO::FETCH_ASSOC);
+    var_dump($resultTypes);
 
 
-?>
+    ?>
 
 
     <form method="POST">
-    <label>Ajoutez un véhicule</label>
-    <input type="text" name="immatriculation">
-    <select name="">
-        <?php
-foreach ($resultCouleurs as $key => $value) {
-    echo "<option value='" . $value["idCouleur"] . "'>" . $value['nomCouleur'] . "</option>";
-}
-?>
-    </select>
-    <input type="submit" name="envoiDonneesImmatriculation">
+        <label>Ajoutez un véhicule</label>
+        <input type="text" name="immatriculation">
+        <select name="selectCouleur">
+            <?php
+            foreach ($resultCouleurs as $key => $value) {
+                echo "<option value='" . $value["idCouleur"] . "'>" . $value['nomCouleur'] . "</option>";
+            }
+            ?>
+        </select>
+        <select name="selectType">
+            <?php
+            foreach ($resultCouleurs as $key => $value) {
+                echo "<option value='" . $value["idCouleur"] . "'>" . $value['nomCouleur'] . "</option>";
+            }
+            ?>
+        </select>
+        <input type="submit" name="envoiDonneesImmatriculation">
     </form>
 </body>
 
@@ -83,6 +96,11 @@ if (isset($_POST['envoiDonneesType'])) {
     $stmt = $pdo->prepare($sql);
     $stmt->execute();
     echo "C'est ok !";
+}
+
+if (isset($_POST['envoiDonneesImmatriculation'])) {
+    $color = $_POST['selectCouleur'];
+    $immatriculation = $_POST['immatriculation'];
 }
 
 ?>
