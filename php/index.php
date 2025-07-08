@@ -1,6 +1,6 @@
 <?php
 $host = 'db';
-$dbname = 'bddCreateOnPhpMyAdmin';
+$dbname = 'bddVehicule';
 $user = 'root';
 $password = 'root';
 
@@ -29,21 +29,32 @@ try {
 <body>
     <form method="POST">
         <input type="text" name="nomDeLaCouleur">
-        <input type="submit" name="envoiDonneesCouleur" value="Envoyé">
+        <input type="submit" name="envoiDonneesCouleur" value="Envoyé une couleur">
+        <input type="text" name="nomTypeVehicule">
+        <input type="submit" name="envoiDonneesType" value="Envoyé un type de véhicule">
     </form>
 </body>
 
 </html>
 
 <?php
- //Avec le submit + if isset $_POST -> envoi de données.  
+//Avec le submit + if isset $_POST -> envoi de données.  
 if (isset($_POST['envoiDonneesCouleur'])) {
-//Declaration variable évite concaténation en requete -> facilite la demande
-$couleur = $_POST['nomDeLaCouleur'];
-   //Requete sql pour insérer value en BDD.
-    $sql="INSERT INTO `couleur`(`nomCouleur`) VALUES ('$couleur')";
+    //Declaration variable évite concaténation en requete -> facilite la demande
+    $couleur = $_POST['nomDeLaCouleur'];
+    //Requete sql pour insérer value en BDD.
+    $sql = "INSERT INTO `couleur`(`nomCouleur`) VALUES ('$couleur')";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute();
     echo "C'est ok !";
 }
 
+if (isset($_POST['envoiDonneesType'])) {
+    $type = $_POST['nomTypeVehicule'];
+    $sql = "INSERT INTO `typeVehicule`(`nomType`) VALUES ('$type')";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute();
+    echo "C'est ok !";
+}
 
 ?>
