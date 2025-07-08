@@ -28,10 +28,38 @@ try {
 
 <body>
     <form method="POST">
+        <label>Ajout couleur en BDD</label>
         <input type="text" name="nomDeLaCouleur">
         <input type="submit" name="envoiDonneesCouleur" value="Envoyé une couleur">
+        <br>
+        <label>Ajout type de véhicule en BDD</label>
         <input type="text" name="nomTypeVehicule">
         <input type="submit" name="envoiDonneesType" value="Envoyé un type de véhicule">
+    </form>
+
+<?php 
+
+$sqlCouleur = "SELECT * FROM `couleur`";
+$stmtCouleur = $pdo->prepare($sqlCouleur);
+$stmtCouleur->execute();
+$resultCouleurs = $stmtCouleur->fetchAll(PDO::FETCH_ASSOC);
+var_dump($resultCouleurs);
+
+
+?>
+
+
+    <form method="POST">
+    <label>Ajoutez un véhicule</label>
+    <input type="text" name="immatriculation">
+    <select name="">
+        <?php
+foreach ($resultCouleurs as $key => $value) {
+    echo "<option value='" . $value["idCouleur"] . "'>" . $value['nomCouleur'] . "</option>";
+}
+?>
+    </select>
+    <input type="submit" name="envoiDonneesImmatriculation">
     </form>
 </body>
 
