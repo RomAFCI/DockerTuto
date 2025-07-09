@@ -145,7 +145,7 @@ if (isset($_POST['envoiDonneesImmatriculation'])) {
 
 if (isset($_GET["id"])) {
     $id = $_GET['id'];
-    $sqlId = "SELECT * FROM `vehicule` WHERE id-vehicule = '$id'";
+    $sqlId = "SELECT * FROM `vehicule` WHERE idVehicule = '$id'";
     $stmtId = $pdo->prepare($sqlId);
     $stmtId->execute();
 
@@ -153,21 +153,33 @@ if (isset($_GET["id"])) {
 
     echo '<form method="POST">
     <label for="">ID</label>
-    <input type="text" name="idUpdate">
+    <input type="text" name="idUpdate" value="' . $resultsId[0]['idVehicule'] . '">
     <br>
     <label for="">immatriculation</label>
-    <input type="text" name="immatriculationUpdate">
+    <input type="text" name="immatriculationUpdate" value="' . $resultsId[0]['immatriculation'] . '">
     <br>
     <label for="">Type</label>
-    <input type="text" name="typeUpdate">
+    <input type="text" name="typeUpdate" value="' . $resultsId[0]['typeVehicule'] . '">
     <br>
     <label for="">Couleur</label>
-    <input type="text" name="couleurUpdate">
+    <input type="text" name="couleurUpdate" value="' . $resultsId[0]['couleur'] . '">
     <br>
     <input type="submit" name="submitUpdate" value="Mettre à jour la BDD">
 </form>';
 
     var_dump($resultsId);
+}
+
+if (isset($_POST['submitUpdate'])) {
+
+    $idUpdate = $_POST['idUpdate'];
+    $immatriculation = $_POST['immatriculationUpdate'];
+    $type = $_POST['typeUpdate'];
+    $couleur = $_POST['couleurUpdate'];
+
+    $sqlUpdate = "UPDATE `vehicule` SET `immatriculation`='$immatriculation',`typeVehicule`='$type',`couleur`='$couleur' WHERE idVehicule='$idUpdate'";
+    $stmtUpdate = $pdo->prepare($sqlUpdate);
+    $stmtUpdate->execute();
 }
 
 ?>
